@@ -8,12 +8,12 @@ networks:
 services:
   zabbix-server:
     build:
-      context: ./zabbix-server
+      context: ${STACK_VOLUME}/zabbix-server
     image: zabbix-server-pgsql-custom:ol-5.2.7
   
     volumes:
-      - ./files/server/externalscripts:/usr/lib/zabbix/externalscripts:ro
-      - ./files/server/odbc/odbc.ini:/etc/odbc.ini:ro
+      - ${STACK_VOLUME}/files/server/externalscripts:/usr/lib/zabbix/externalscripts:ro
+      - ${STACK_VOLUME}/files/server/odbc/odbc.ini:/etc/odbc.ini:ro
     environment: 
       - DB_SERVER_HOST=postgres
       - DB_SERVER_PORT=5432
@@ -84,7 +84,7 @@ services:
   postgres:
     image: postgres:13-alpine
     volumes:
-      - ./files/pgsql/data:/var/lib/postgresql/data:rw
+      - ${STACK_VOLUME}/files/pgsql/data:/var/lib/postgresql/data:rw
     environment: 
       - DB_SERVER_HOST=postgres
       - DB_SERVER_PORT=5432
